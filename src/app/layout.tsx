@@ -1,11 +1,12 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter, Roboto } from "next/font/google";
+import { Roboto, Dosis, Raleway } from "next/font/google";
+import Nav from "@/components/nav";
 import "@/styles/globals.css";
 
-const roboto = Roboto({
+const roboto = Raleway({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["100", "300", "400", "500", "700", "900"],
+  weight: ["100", "200", "300", "400", "500", "700", "800", "900"],
 });
 
 export const metadata = {
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`font-sans ${roboto.variable}`}>{children}</body>
+        <body className={`font-sans ${roboto.variable}`}>
+          <Nav />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

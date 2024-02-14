@@ -21,5 +21,7 @@ export function formatPrice(
     currency,
     notation,
     maximumFractionDigits: 2,
-  }).format(numericPrice);
+  })
+    .format(numericPrice)
+    .replace("MX", "");
 }

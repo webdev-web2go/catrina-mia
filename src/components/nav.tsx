@@ -15,14 +15,14 @@ export default async function Nav() {
         <Link className="tracking-wide" href="#">
           Sobre Catrina Mía
         </Link>
-        <Link className="tracking-wide" href="#">
+        <Link className="tracking-wide" href="/">
           Home
         </Link>
         <Link className="tracking-wide" href="#">
           Galería
         </Link>
         <Protect role="org:admin">
-          <Link className="tracking-wide" href="#">
+          <Link className="tracking-wide" href="/admin">
             Administrar
           </Link>
         </Protect>
@@ -34,7 +34,7 @@ export default async function Nav() {
           </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
           <ShoppingBag />
         </SignedIn>
       </div>

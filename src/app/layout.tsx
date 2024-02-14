@@ -1,9 +1,10 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import { Roboto, Dosis, Raleway } from "next/font/google";
+import { Raleway } from "next/font/google";
 import Nav from "@/components/nav";
 import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
-const roboto = Raleway({
+const raleway = Raleway({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["100", "200", "300", "400", "500", "700", "800", "900"],
@@ -23,9 +24,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`font-sans ${roboto.variable}`}>
+        <body className={`min-h-screen font-sans ${raleway.variable}`}>
           <Nav />
           {children}
+          <Toaster richColors />
         </body>
       </html>
     </ClerkProvider>

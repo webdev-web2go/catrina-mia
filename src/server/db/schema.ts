@@ -3,6 +3,7 @@
 
 import { InferSelectModel, relations, sql } from "drizzle-orm";
 import {
+  boolean,
   float,
   int,
   mysqlEnum,
@@ -21,9 +22,12 @@ export const createTable = mysqlTableCreator((name) => `catrina-mia_${name}`);
 
 export const products = createTable("products", {
   id: int("id").primaryKey().autoincrement(),
-  categoryId: int("category_id"),
+  categoryId: int("category_id").notNull(),
   price: float("price").notNull(),
-  imageUrl: varchar("image_url", { length: 256 }).notNull(),
+  description: varchar("description", { length: 256 }).notNull(),
+  cloudinaryImageId: varchar("cloudinary_image_id", { length: 256 }).notNull(),
+  stock: int("stock").default(1),
+  active: boolean("active").default(true),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

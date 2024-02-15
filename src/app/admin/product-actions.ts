@@ -11,7 +11,7 @@ export async function createProductAction({
   price,
   description,
   cloudinaryImageId,
-}: Omit<Product, "id" | "stock" | "active" | "createdAt" | "updatedAt">) {
+}: Partial<Product>) {
   const { userId, orgRole } = auth();
 
   if (userId && orgRole !== "org:admin") {

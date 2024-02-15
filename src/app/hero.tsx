@@ -2,14 +2,14 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="h-full w-full">
+    <section className="relative h-full w-full">
       <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 px-10 md:w-fit md:px-0">
         <Image
           src="/logo_letters.webp"
           alt="Logo de catrina mía"
           width={600}
           height={200}
-          className="w-full brightness-150"
+          className="animate-fade-up w-full brightness-150 motion-reduce:animate-none"
         />
       </div>
       <video

@@ -1,20 +1,19 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddProductForm from "./add-product-form";
-import { db } from "@/server/db";
 import ProductItem from "./product-item";
-import { eq } from "drizzle-orm";
-import { products } from "@/server/db/schema";
+import { getProducts } from "@/lib/drizzle";
 
 export default async function AdminPage() {
-  const activeProducts = await db.query.products.findMany({
-    where: eq(products.active, true),
-  });
-  const inactiveProducts = await db.query.products.findMany({
-    where: eq(products.active, false),
-  });
+  const [activeProducts, inactiveProducts] = await Promise.all([
+    getProducts(true),
+    getProducts(false),
+  ]);
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-900 text-primary-foreground">
-      <Tabs defaultValue="addProduct" className="h-[650px] w-[800px] space-y-4">
+      <Tabs
+        defaultValue="deactivateProduct"
+        className="h-[650px] w-[800px] space-y-4"
+      >
         <TabsList className="w-full">
           <TabsTrigger value="addProduct" className="w-full">
             Agregar producto
@@ -31,7 +30,7 @@ export default async function AdminPage() {
         </TabsContent>
         <TabsContent value="deactivateProduct">
           <div className=" flex h-[650px] flex-col gap-4 overflow-scroll">
-            {activeProducts.length > 0 ? (
+            {activeProducts && activeProducts.length > 0 ? (
               activeProducts.map((product) => (
                 <ProductItem
                   key={product.id}
@@ -51,7 +50,7 @@ export default async function AdminPage() {
         </TabsContent>
         <TabsContent value="activateProduct">
           <div className="flex h-[650px] flex-col gap-4 overflow-scroll">
-            {inactiveProducts.length > 0 ? (
+            {inactiveProducts && inactiveProducts.length > 0 ? (
               inactiveProducts.map((product) => (
                 <ProductItem
                   key={product.id}

@@ -1,11 +1,9 @@
 "use client";
 
 import SubmitButton from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/server/db/schema";
 import { CldImage } from "next-cloudinary";
-import React from "react";
 import { changeProductStatusAction } from "./product-actions";
 import { toast } from "sonner";
 
@@ -57,6 +55,7 @@ export default function ProductItem({
             }
             text={active ? "Deshabilitar producto" : "Habilitar producto"}
             className="w-full"
+            variant="secondary"
           />
         </form>
       </div>

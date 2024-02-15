@@ -59,7 +59,7 @@ export default function AddProductForm() {
         ref={formRef}
         className="flex flex-col gap-2 [&>fieldset>input]:text-primary"
       >
-        <Button asChild className="w-full">
+        <Button asChild className="w-full" variant="outline">
           <CldUploadButton
             uploadPreset="qxympfdg"
             options={{ folder: "catrina-mia" }}
@@ -111,7 +111,11 @@ export default function AddProductForm() {
               ))}
           </div>
         </fieldset>
-        <SubmitButton loadingText="Creando producto..." text="Crear producto" />
+        <SubmitButton
+          loadingText="Creando producto..."
+          text="Crear producto"
+          variant="secondary"
+        />
       </form>
       {uploadInfo ? (
         <figure className="aspect-square">

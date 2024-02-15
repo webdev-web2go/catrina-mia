@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { Button } from "./ui/button";
+import { Button, ButtonProps } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
@@ -15,13 +15,15 @@ export default function SubmitButton({
   loadingText,
   text,
   className,
+  variant = "default",
   ...props
-}: Props) {
+}: Props & ButtonProps) {
   const { pending } = useFormStatus();
   return (
     <Button
       {...props}
       className={cn("flex items-center justify-center gap-2", className)}
+      variant={variant}
       disabled={pending}
     >
       {pending ? loadingText : text}{" "}

@@ -1,9 +1,12 @@
 import Hero from "./hero";
+import ProductsSection from "./products-section";
 
 export default async function HomePage() {
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-6">
+    <main className="flex flex-col gap-16">
       <Hero />
+      <ProductsSection />
+      <div>FOOTER</div>
     </main>
   );
 }

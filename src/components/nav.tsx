@@ -10,8 +10,8 @@ import { ShoppingBag, User } from "lucide-react";
 
 export default async function Nav() {
   return (
-    <header className="fixed top-0 z-50 flex w-full items-center justify-between px-12 py-8 text-lg text-primary-foreground">
-      <nav className="flex gap-6 font-extralight">
+    <header className="fixed top-0 z-50 flex w-full items-center justify-between px-12 py-8 text-lg text-primary-foreground antialiased">
+      <nav className="flex gap-6 font-light">
         <Link className="tracking-wide" href="#">
           Sobre Catrina Mía
         </Link>

@@ -5,14 +5,17 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/server/db/schema";
 import { CldImage } from "next-cloudinary";
 import { Button } from "./ui/button";
 import { ShoppingBag } from "lucide-react";
+import { addToCartAction } from "@/actions/add-to-cart-action";
+import SubmitButton from "./submit-button";
+import { toast } from "sonner";
+import CustomSignInButton from "./sign-in-button";
+import { SignIn } from "@clerk/nextjs";
 
 export default function ProductCard({
   cloudinaryImageId,
@@ -20,6 +23,24 @@ export default function ProductCard({
   id,
   price,
 }: Partial<Product>) {
+  const addToCart = async () => {
+    const result = await addToCartAction(id as number);
+
+    if (result.error) {
+      toast.error(result.error, {
+        style: { background: "#fff0f0", color: "red" },
+      });
+    } else if (result.info) {
+      toast.info(result.info, {
+        style: { background: "#eff8ff", color: "blue", borderColor: "#d3e0fd" },
+      });
+    } else {
+      toast.success(result.success, {
+        style: { background: "#ecfdf3", color: "green" },
+      });
+    }
+  };
+
   return (
     <Card className="space-y-2">
       {/* <CardHeader> */}
@@ -42,9 +63,17 @@ export default function ProductCard({
       </CardContent>
       <CardFooter className="mt-auto flex flex-col gap-2">
         <strong className="text-2xl">{formatPrice(price as number)}</strong>
-        <Button className="flex w-full items-center gap-2 font-semibold">
-          <ShoppingBag /> Agregar al carrito
-        </Button>
+        <form action={addToCart} className="w-full">
+          <SubmitButton
+            className="w-full"
+            loadingText="Agregando al carrito..."
+            text={
+              <>
+                <ShoppingBag /> Agregar al carrito
+              </>
+            }
+          />
+        </form>
       </CardFooter>
     </Card>
   );

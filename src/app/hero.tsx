@@ -9,7 +9,7 @@ export default function Hero() {
           alt="Logo de catrina mía"
           width={600}
           height={200}
-          className="animate-fade-up w-full brightness-150 motion-reduce:animate-none"
+          className="w-full animate-fade-up brightness-150 motion-reduce:animate-none"
         />
       </div>
       <video
@@ -24,7 +24,7 @@ export default function Hero() {
         <source src="/hero/hero-video.mp4" type="video/mp4" />
       </video>
       <div
-        aria-hidden={true}
+        aria-hidden="true"
         className="absolute bottom-0 top-0 z-10 h-full w-full
     bg-gradient-to-b from-transparent from-30% to-black"
       />

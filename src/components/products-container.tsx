@@ -12,6 +12,7 @@ export default function ProductsContainer({
       {products.map(({ cloudinaryImageId, description, id, price }) => (
         <ProductCard
           key={id}
+          id={id}
           cloudinaryImageId={cloudinaryImageId}
           description={description}
           price={price}

@@ -7,6 +7,8 @@ import {
 } from "@clerk/nextjs";
 import Link from "next/link";
 import { ShoppingBag, User } from "lucide-react";
+import { Button } from "./ui/button";
+import CustomSignInButton from "./sign-in-button";
 
 export default async function Nav() {
   return (
@@ -29,9 +31,7 @@ export default async function Nav() {
       </nav>
       <div className="flex items-center gap-4">
         <SignedOut>
-          <SignInButton mode="modal">
-            <User className="cursor-pointer" />
-          </SignInButton>
+          <CustomSignInButton size="lg" />
         </SignedOut>
         <SignedIn>
           <UserButton afterSignOutUrl="/" />

@@ -43,8 +43,6 @@ export const productsRelations = relations(products, ({ one, many }) => ({
   productsToCarts: many(productsToCarts),
 }));
 
-export type Product = InferSelectModel<typeof products>;
-
 export const categories = createTable("categories", {
   id: int("id").primaryKey().autoincrement(),
   name: mysqlEnum("name", [
@@ -62,8 +60,6 @@ export const categories = createTable("categories", {
 export const categoriesRelations = relations(categories, ({ many }) => ({
   products: many(products),
 }));
-
-export type Category = InferSelectModel<typeof categories>;
 
 export const users = createTable("users", {
   id: int("id").primaryKey().autoincrement(),
@@ -85,8 +81,6 @@ export const usersRelations = relations(users, ({ one }) => ({
     references: [carts.id],
   }),
 }));
-
-export type User = InferSelectModel<typeof users>;
 
 export const carts = createTable("carts", {
   id: int("id").primaryKey().autoincrement(),
@@ -129,3 +123,7 @@ export const productsToCartsRelations = relations(
     }),
   }),
 );
+
+export type Product = InferSelectModel<typeof products>;
+export type Category = InferSelectModel<typeof categories>;
+export type User = InferSelectModel<typeof users>;

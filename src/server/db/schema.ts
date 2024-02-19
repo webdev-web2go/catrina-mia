@@ -8,6 +8,7 @@ import {
   int,
   mysqlEnum,
   mysqlTableCreator,
+  primaryKey,
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
@@ -34,11 +35,12 @@ export const products = createTable("products", {
   updatedAt: timestamp("updatedAt").onUpdateNow(),
 });
 
-export const productsRelations = relations(products, ({ one }) => ({
+export const productsRelations = relations(products, ({ one, many }) => ({
   category: one(categories, {
     fields: [products.categoryId],
     references: [categories.id],
   }),
+  productsToCarts: many(productsToCarts),
 }));
 
 export type Product = InferSelectModel<typeof products>;
@@ -62,3 +64,68 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 }));
 
 export type Category = InferSelectModel<typeof categories>;
+
+export const users = createTable("users", {
+  id: int("id").primaryKey().autoincrement(),
+  clerkId: varchar("clerk_id", { length: 256 }).notNull(),
+  cartId: int("cart_id"),
+  email: varchar("email", { length: 256 }).notNull(),
+  firstName: varchar("first_name", { length: 256 }).notNull(),
+  lastName: varchar("last_name", { length: 256 }).notNull(),
+  profileImage: varchar("profile_image", { length: 256 }).notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updatedAt").onUpdateNow(),
+});
+
+export const usersRelations = relations(users, ({ one }) => ({
+  cart: one(carts, {
+    fields: [users.cartId],
+    references: [carts.id],
+  }),
+}));
+
+export type User = InferSelectModel<typeof users>;
+
+export const carts = createTable("carts", {
+  id: int("id").primaryKey().autoincrement(),
+  userId: int("user_id"),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updatedAt").onUpdateNow(),
+});
+
+export const cartsRelations = relations(carts, ({ one, many }) => ({
+  productsToCarts: many(productsToCarts),
+  user: one(users, {
+    fields: [carts.userId],
+    references: [users.id],
+  }),
+}));
+
+export const productsToCarts = createTable(
+  "products_to_carts",
+  {
+    productId: int("product_id"),
+    cartId: int("cart_id"),
+  },
+  ({ cartId, productId }) => ({
+    pk: primaryKey({ columns: [cartId, productId] }),
+  }),
+);
+
+export const productsToCartsRelations = relations(
+  productsToCarts,
+  ({ one }) => ({
+    cart: one(carts, {
+      fields: [productsToCarts.cartId],
+      references: [carts.id],
+    }),
+    product: one(products, {
+      fields: [productsToCarts.productId],
+      references: [products.id],
+    }),
+  }),
+);

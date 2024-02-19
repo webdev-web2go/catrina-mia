@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative h-full w-full">
+    <section className="relative min-h-screen w-full">
       <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 px-10 md:w-fit md:px-0">
         <Image
           src="/logo_letters.webp"
@@ -19,7 +19,7 @@ export default function Hero() {
         playsInline
         id="main-video"
         preload="metadata"
-        className="aspect-video h-full w-full object-cover object-center"
+        className="aspect-video min-h-screen w-full object-cover object-center"
       >
         <source src="/hero/hero-video.mp4" type="video/mp4" />
       </video>

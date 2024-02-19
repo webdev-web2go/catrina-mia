@@ -22,7 +22,7 @@ export default function SectionHeader({
   return (
     <Container>
       <header
-        className={cn("flex flex-col gap-4 px-36 antialiased", className)}
+        className={cn("flex flex-col gap-4 antialiased md:px-36", className)}
       >
         <div
           className={cn(
@@ -30,11 +30,11 @@ export default function SectionHeader({
             centerTitle && "items-center",
           )}
         >
-          <Badge>{subtitle}</Badge>
+          <Badge className="text-xs sm:text-sm">{subtitle}</Badge>
           {isMainTitle ? (
             <h1
               className={cn(
-                "w-full border-b-2 border-primary/80 pb-2 text-5xl font-medium",
+                "w-full border-b-2 border-primary/80 pb-2 text-4xl font-medium sm:text-5xl",
                 centerTitle && "text-center",
               )}
             >
@@ -43,7 +43,7 @@ export default function SectionHeader({
           ) : (
             <h2
               className={cn(
-                "w-full border-b-2 border-primary/80 pb-2 text-5xl font-medium",
+                "w-full border-b-2 border-primary/80 pb-2 text-4xl font-medium sm:text-5xl",
                 centerTitle && "text-center",
               )}
             >
@@ -53,7 +53,7 @@ export default function SectionHeader({
         </div>
         <p
           className={cn(
-            "max-w-prose text-muted-foreground",
+            "max-w-prose text-sm text-muted-foreground sm:text-base",
             centerTitle && "text-center",
           )}
         >

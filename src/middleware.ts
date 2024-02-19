@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export default authMiddleware({
   publicRoutes: (req) => !req.url.includes("/admin"),
+  ignoredRoutes: ["/api/webhooks/users"],
   afterAuth(auth, req) {
     // Handle users who aren't authenticated
     if (!auth.userId && !auth.isPublicRoute) {

@@ -1,14 +1,8 @@
-import {
-  Protect,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { Protect, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { ShoppingBag, User } from "lucide-react";
-import { Button } from "./ui/button";
+import { ShoppingBag } from "lucide-react";
 import CustomSignInButton from "./sign-in-button";
+import Cart from "./cart/cart";
 
 export default async function Nav() {
   return (
@@ -35,7 +29,7 @@ export default async function Nav() {
         </SignedOut>
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
-          <ShoppingBag />
+          <Cart />
         </SignedIn>
       </div>
     </header>

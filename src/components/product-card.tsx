@@ -9,22 +9,22 @@ import {
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/server/db/schema";
 import { CldImage } from "next-cloudinary";
-import { Button } from "./ui/button";
 import { ShoppingBag } from "lucide-react";
-import { addToCartAction } from "@/actions/add-to-cart-action";
+import { addToCartAction } from "@/actions/cart-actions";
 import SubmitButton from "./submit-button";
 import { toast } from "sonner";
-import CustomSignInButton from "./sign-in-button";
-import { SignIn } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 export default function ProductCard({
   cloudinaryImageId,
   description,
   id,
   price,
-}: Partial<Product>) {
+}: Pick<Product, "id" | "description" | "cloudinaryImageId" | "price">) {
+  const pathname = usePathname();
+
   const addToCart = async () => {
-    const result = await addToCartAction(id as number);
+    const result = await addToCartAction(id, pathname);
 
     if (result.error) {
       toast.error(result.error, {
@@ -36,7 +36,11 @@ export default function ProductCard({
       });
     } else {
       toast.success(result.success, {
-        style: { background: "#ecfdf3", color: "green" },
+        style: {
+          background: "#ecfdf3",
+          color: "green",
+          borderColor: "#d3fde5",
+        },
       });
     }
   };

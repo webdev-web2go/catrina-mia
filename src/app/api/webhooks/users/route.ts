@@ -55,7 +55,6 @@ async function handler(req: Request) {
 
     if (!userExists) {
       const { insertId: userId } = await db.insert(users).values({
-        clerkId: evt.data.id as string,
         email: evt.data.email_addresses[0]?.email_address as string,
         firstName: evt.data.first_name as string,
         lastName: evt.data.last_name as string,

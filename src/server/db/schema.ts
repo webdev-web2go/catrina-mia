@@ -63,7 +63,6 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 
 export const users = createTable("users", {
   id: int("id").primaryKey().autoincrement(),
-  clerkId: varchar("clerk_id", { length: 256 }).notNull(),
   cartId: int("cart_id"),
   email: varchar("email", { length: 256 }).unique().notNull(),
   firstName: varchar("first_name", { length: 256 }).notNull(),

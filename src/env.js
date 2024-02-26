@@ -20,6 +20,7 @@ export const env = createEnv({
     CLERK_SECRET_KEY: z.string(),
     WEBHOOK_SECRET: z.string(),
     STRIPE_SECRET_KEY: z.string(),
+    STRIPE_ENDPOINT_SECRET: z.string(),
   },
 
   /**
@@ -50,6 +51,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

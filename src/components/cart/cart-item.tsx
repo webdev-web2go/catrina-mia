@@ -1,8 +1,9 @@
-import { getCategoryById, getProductById } from "@/lib/drizzle";
+import { getProductById } from "@/lib/drizzle/product";
 import type { Category, Product } from "@/server/db/schema";
 import CldImageWrapper from "../cld-image-wrapper";
 import { formatPrice } from "@/lib/utils";
 import RemoveItem from "./remove-item";
+import { getCategoryById } from "@/lib/drizzle/category";
 
 export default async function CartItem({ id }: { id: number }) {
   const { description, cloudinaryImageId, price, categoryId } =

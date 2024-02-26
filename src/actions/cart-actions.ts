@@ -1,6 +1,6 @@
 "use server";
 
-import { getCartId } from "@/lib/drizzle";
+import { getCartId } from "@/lib/drizzle/cart";
 import { db } from "@/server/db";
 import { productsToCarts } from "@/server/db/schema";
 import { auth } from "@clerk/nextjs";

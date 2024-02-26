@@ -1,6 +1,6 @@
 import ProductsContainer from "@/components/products-container";
 import SectionHeader from "@/components/section-header";
-import { getProducts } from "@/lib/drizzle";
+import { getProducts } from "@/lib/drizzle/product";
 import type { Product } from "@/server/db/schema";
 
 export default async function ProductsSection() {

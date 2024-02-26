@@ -6,7 +6,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { getProductsInCart } from "@/lib/drizzle";
+import { getProductsInCart } from "@/lib/drizzle/cart";
 import { ShoppingBag } from "lucide-react";
 import CartItem from "./cart-item";
 import Image from "next/image";
@@ -39,6 +39,8 @@ export default async function Cart() {
                   alt="Logo de Catrina mía"
                   width={150}
                   height={150}
+                  placeholder="blur"
+                  blurDataURL="/small_logo.webp"
                   className="rounded-full"
                 />
                 <p className="text-center">

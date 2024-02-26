@@ -1,22 +1,30 @@
 "use server";
 
-import { env } from "@/env";
-import { getCategoryById, getProductById } from "@/lib/drizzle";
+import { getProductById } from "@/lib/drizzle/product";
+import { getCategoryById } from "@/lib/drizzle/category";
+import { stripe } from "@/lib/stripe";
 import {
   type Category,
   type Product,
   type ProductToCart,
 } from "@/server/db/schema";
+import { currentUser } from "@clerk/nextjs";
 import { getCldImageUrl } from "next-cloudinary";
-import Stripe from "stripe";
-
-const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
 export async function createSessionAction(
   productsToCarts: ProductToCart[],
   host: string,
 ) {
+  if (productsToCarts.length === 0) {
+    return {
+      error: {
+        message: "Ingrese productos al carrito para proceder a la compra",
+      },
+    };
+  }
+
   try {
+    const user = await currentUser();
     const products: (Product & { category: string })[] = [];
 
     for (const { productId } of productsToCarts) {
@@ -30,6 +38,7 @@ export async function createSessionAction(
 
     const success = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
+      customer_email: user?.emailAddresses[0]?.emailAddress,
       line_items: products.map((product) => ({
         quantity: 1,
         price_data: {

@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddProductForm from "./add-product-form";
 import ProductItem from "./product-item";
-import { getProducts } from "@/lib/drizzle";
+import { getProducts } from "@/lib/drizzle/product";
 
 export default async function AdminPage() {
   const [activeProducts, inactiveProducts] = await Promise.all([

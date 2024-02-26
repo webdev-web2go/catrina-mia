@@ -44,24 +44,34 @@ async function handler(req: Request) {
       "svix-signature": svix_signature,
     } as IncomingHttpHeaders & WebhookRequiredHeaders) as UserWebhookEvent;
 
-    //Create user and user's cart
-    const { insertId: userId } = await db.insert(users).values({
-      clerkId: evt.data.id as string,
-      email: evt.data.email_addresses[0]?.email_address as string,
-      firstName: evt.data.first_name as string,
-      lastName: evt.data.last_name as string,
-      profileImage: evt.data.image_url as string,
+    //Create user (if doesn't exist) and user's cart
+
+    const userExists = await db.query.users.findFirst({
+      where: eq(
+        users.email,
+        evt.data.email_addresses[0]?.email_address as string,
+      ),
     });
 
-    const { insertId: cartId } = await db
-      .insert(carts)
-      .values({ userId: Number(userId) });
+    if (!userExists) {
+      const { insertId: userId } = await db.insert(users).values({
+        clerkId: evt.data.id as string,
+        email: evt.data.email_addresses[0]?.email_address as string,
+        firstName: evt.data.first_name as string,
+        lastName: evt.data.last_name as string,
+        profileImage: evt.data.image_url as string,
+      });
 
-    //Asign cart to user
-    await db
-      .update(users)
-      .set({ cartId: Number(cartId) })
-      .where(eq(users.id, Number(userId)));
+      const { insertId: cartId } = await db
+        .insert(carts)
+        .values({ userId: Number(userId) });
+
+      //Asign cart to user
+      await db
+        .update(users)
+        .set({ cartId: Number(cartId) })
+        .where(eq(users.id, Number(userId)));
+    }
   } catch (err) {
     console.error("Error verifying webhook:", err);
     return new Response("Error occured", {

@@ -2,7 +2,7 @@
 
 import { getCartId } from "@/lib/drizzle";
 import { db } from "@/server/db";
-import { type User, users, productsToCarts } from "@/server/db/schema";
+import { productsToCarts } from "@/server/db/schema";
 import { auth } from "@clerk/nextjs";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -18,9 +18,7 @@ export async function addToCartAction(productId: number, pathname: string) {
 
   try {
     //Get user's cart's id
-    const { cartId } = (await db.query.users.findFirst({
-      where: eq(users.clerkId, userId),
-    })) as User;
+    const cartId = await getCartId();
 
     //Check if product is in the cart already
     const alreadyInCart = await db.query.productsToCarts.findFirst({

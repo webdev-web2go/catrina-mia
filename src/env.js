@@ -19,6 +19,7 @@ export const env = createEnv({
       .default("development"),
     CLERK_SECRET_KEY: z.string(),
     WEBHOOK_SECRET: z.string(),
+    STRIPE_SECRET_KEY: z.string(),
   },
 
   /**
@@ -30,6 +31,7 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string(),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string(),
   },
 
   /**
@@ -45,6 +47,9 @@ export const env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     WEBHOOK_SECRET: process.env.WEBHOOK_SECRET,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

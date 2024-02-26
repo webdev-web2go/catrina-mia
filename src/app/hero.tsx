@@ -24,7 +24,7 @@ export default function Hero() {
         <source src="/hero/hero-video.mp4" type="video/mp4" />
       </video>
       <div
-        aria-hidden="true"
+        aria-hidden
         className="absolute bottom-0 top-0 z-10 h-full w-full
     bg-gradient-to-b from-transparent from-30% to-black"
       />

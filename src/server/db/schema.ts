@@ -65,7 +65,7 @@ export const users = createTable("users", {
   id: int("id").primaryKey().autoincrement(),
   clerkId: varchar("clerk_id", { length: 256 }).notNull(),
   cartId: int("cart_id"),
-  email: varchar("email", { length: 256 }).notNull(),
+  email: varchar("email", { length: 256 }).unique().notNull(),
   firstName: varchar("first_name", { length: 256 }).notNull(),
   lastName: varchar("last_name", { length: 256 }).notNull(),
   profileImage: varchar("profile_image", { length: 256 }).notNull(),
@@ -84,7 +84,7 @@ export const usersRelations = relations(users, ({ one }) => ({
 
 export const carts = createTable("carts", {
   id: int("id").primaryKey().autoincrement(),
-  userId: int("user_id"),
+  userId: int("user_id").references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -103,7 +103,7 @@ export const productsToCarts = createTable(
   "products_to_carts",
   {
     productId: int("product_id"),
-    cartId: int("cart_id"),
+    cartId: int("cart_id").references(() => carts.id, { onDelete: "cascade" }),
   },
   ({ cartId, productId }) => ({
     pk: primaryKey({ columns: [cartId, productId] }),
@@ -127,3 +127,4 @@ export const productsToCartsRelations = relations(
 export type Product = InferSelectModel<typeof products>;
 export type Category = InferSelectModel<typeof categories>;
 export type User = InferSelectModel<typeof users>;
+export type ProductToCart = InferSelectModel<typeof productsToCarts>;

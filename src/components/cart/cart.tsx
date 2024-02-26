@@ -10,7 +10,7 @@ import { getProductsInCart } from "@/lib/drizzle";
 import { ShoppingBag } from "lucide-react";
 import CartItem from "./cart-item";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import CheckoutButton from "./checkout-button";
 
 export default async function Cart() {
   const productsInCart = await getProductsInCart();
@@ -21,7 +21,7 @@ export default async function Cart() {
         <ShoppingBag aria-label="Carrito de compras" />
         {productsInCart && productsInCart.length > 0 && (
           <span
-            aria-hidden="true"
+            aria-hidden
             className="absolute right-0 top-0 block size-2 rounded-full bg-red-600"
           />
         )}
@@ -49,18 +49,21 @@ export default async function Cart() {
             )}
           </SheetDescription>
         </SheetHeader>
-        <div className="h-5/6 space-y-2 overflow-scroll">
-          {productsInCart &&
-            productsInCart?.map((product) => (
-              <CartItem
-                key={product.productId}
-                id={product.productId as number}
-              />
-            ))}
-        </div>
-        <footer className="mt-auto antialiased">
-          <Button className="w-full font-semibold">Proceder a la compra</Button>
-        </footer>
+        {productsInCart && productsInCart?.length! > 0 && (
+          <>
+            <div className="h-5/6 space-y-2 overflow-scroll py-2">
+              {productsInCart?.map((product) => (
+                <CartItem
+                  key={product.productId}
+                  id={product.productId as number}
+                />
+              ))}
+            </div>
+            <footer className="mt-auto antialiased">
+              <CheckoutButton productsToCarts={productsInCart} />
+            </footer>
+          </>
+        )}
       </SheetContent>
     </Sheet>
   );

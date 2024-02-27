@@ -1,10 +1,10 @@
-import ProductsContainer from "@/components/products-container";
+import ProductsCarousel from "@/components/products-carousel";
 import SectionHeader from "@/components/section-header";
 import { getProducts } from "@/lib/drizzle/product";
 import type { Product } from "@/server/db/schema";
 
 export default async function ProductsSection() {
-  const products = await getProducts(true);
+  const products = await getProducts(true, 6);
   return (
     <section className="space-y-6 antialiased">
       <SectionHeader
@@ -15,7 +15,7 @@ export default async function ProductsSection() {
         isMainTitle
         centerTitle
       />
-      <ProductsContainer products={products as Product[]} />
+      <ProductsCarousel products={products as Product[]} />
     </section>
   );
 }

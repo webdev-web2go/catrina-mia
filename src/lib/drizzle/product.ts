@@ -12,10 +12,11 @@ export async function getProductById(id: number) {
   }
 }
 
-export async function getProducts(isActive: boolean) {
+export async function getProducts(isActive: boolean, limit?: number) {
   try {
     return await db.query.products.findMany({
       where: eq(products.active, isActive),
+      limit,
     });
   } catch (error) {
     console.error(error);

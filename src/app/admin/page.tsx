@@ -10,10 +10,7 @@ export default async function AdminPage() {
   ]);
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-900 text-primary-foreground">
-      <Tabs
-        defaultValue="deactivateProduct"
-        className="h-[650px] w-[800px] space-y-4"
-      >
+      <Tabs defaultValue="addProduct" className="h-[650px] w-[800px] space-y-4">
         <TabsList className="w-full">
           <TabsTrigger value="addProduct" className="w-full">
             Agregar producto

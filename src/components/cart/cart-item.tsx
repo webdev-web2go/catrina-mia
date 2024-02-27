@@ -2,7 +2,7 @@ import { getProductById } from "@/lib/drizzle/product";
 import type { Category, Product } from "@/server/db/schema";
 import CldImageWrapper from "../cld-image-wrapper";
 import { formatPrice } from "@/lib/utils";
-import RemoveItem from "./remove-item";
+import RemoveFromCart from "./remove-item";
 import { getCategoryById } from "@/lib/drizzle/category";
 
 export default async function CartItem({ id }: { id: number }) {
@@ -13,7 +13,7 @@ export default async function CartItem({ id }: { id: number }) {
 
   return (
     <article className="relative flex gap-2 text-sm antialiased">
-      <RemoveItem id={id} />
+      <RemoveFromCart id={id} />
       <CldImageWrapper
         id={cloudinaryImageId}
         description={description}

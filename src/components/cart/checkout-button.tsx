@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "../ui/button";
 import { createSessionAction } from "@/actions/stripe-actions";
 import { ProductToCart } from "@/server/db/schema";
 import { useRouter } from "next/navigation";
@@ -17,8 +16,9 @@ export default function CheckoutButton({
     const host = window.location.origin;
     const result = await createSessionAction(productsToCarts, host);
 
-    if (result.success) router.push(result.success.url as string);
-    else {
+    if (result.success) {
+      router.push(result.success.url as string);
+    } else {
       toast.error(result.error.message, {
         style: { background: "#fff0f0", color: "red" },
       });
@@ -29,7 +29,7 @@ export default function CheckoutButton({
       <SubmitButton
         loadingText="Proceder a la compra..."
         text="Proceder a la compra"
-        className="w-full font-semibold"
+        className="w-full font-bold"
       />
     </form>
   );

@@ -16,7 +16,7 @@ export default function ProductCard({
   price,
 }: Pick<Product, "id" | "description" | "cloudinaryImageId" | "price">) {
   return (
-    <Card className="space-y-2">
+    <Card className=" w-[300px] space-y-2 overflow-hidden sm:w-[340px]">
       <CldImageWrapper description={description} id={cloudinaryImageId} />
       <CardContent className="text-center">
         <CardDescription className="line-clamp-2 overflow-hidden text-ellipsis text-foreground">

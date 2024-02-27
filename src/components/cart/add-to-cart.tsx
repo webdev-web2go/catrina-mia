@@ -33,7 +33,7 @@ export default function AddToCart({ id }: { id: number }) {
   return (
     <form action={addToCart} className="w-full">
       <SubmitButton
-        className="w-full"
+        className="w-full font-bold"
         loadingText="Agregando al carrito..."
         text={
           <>

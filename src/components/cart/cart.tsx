@@ -11,6 +11,7 @@ import { ShoppingBag } from "lucide-react";
 import CartItem from "./cart-item";
 import Image from "next/image";
 import CheckoutButton from "./checkout-button";
+import RemoveFromCart from "./remove-item";
 
 export default async function Cart() {
   const productsInCart = await getProductsInCart();
@@ -28,11 +29,16 @@ export default async function Cart() {
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col sm:max-w-[450px]">
         <SheetHeader className="space-y-4">
-          <SheetTitle>
-            Tu carrito de compras ({productsInCart?.length})
-          </SheetTitle>
-          <SheetDescription>
-            {productsInCart?.length === 0 && (
+          <div className="flex items-center gap-2">
+            <SheetTitle>
+              Tu carrito de compras ({productsInCart?.length})
+            </SheetTitle>
+            {productsInCart && productsInCart?.length! > 0 && (
+              <RemoveFromCart />
+            )}
+          </div>
+          {productsInCart?.length === 0 && (
+            <SheetDescription>
               <div className="flex flex-col items-center gap-2">
                 <Image
                   src="/logo.webp"
@@ -48,8 +54,8 @@ export default async function Cart() {
                   productos para visualizarlos.
                 </p>
               </div>
-            )}
-          </SheetDescription>
+            </SheetDescription>
+          )}
         </SheetHeader>
         {productsInCart && productsInCart?.length! > 0 && (
           <>

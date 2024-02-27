@@ -45,23 +45,31 @@ export async function addToCartAction(productId: number, pathname: string) {
   }
 }
 
-export async function removeItemFromCartAction(
-  productId: number,
+export async function removeFromCartAction(
   pathname: string,
+  productId?: number,
 ) {
   const cartId = await getCartId();
   try {
-    await db
-      .delete(productsToCarts)
-      .where(
-        and(
-          eq(productsToCarts.productId, productId),
-          eq(productsToCarts.cartId, cartId as number),
-        ),
-      );
+    if (productId) {
+      await db
+        .delete(productsToCarts)
+        .where(
+          and(
+            eq(productsToCarts.productId, productId),
+            eq(productsToCarts.cartId, cartId as number),
+          ),
+        );
 
-    revalidatePath(pathname);
-    return { success: "Producto eliminado correctamente" };
+      revalidatePath(pathname);
+      return { success: "Producto eliminado correctamente" };
+    } else {
+      await db
+        .delete(productsToCarts)
+        .where(eq(productsToCarts.cartId, cartId as number));
+      revalidatePath(pathname);
+      return { success: "Carrito vaciado correctamente" };
+    }
   } catch (error) {
     return { error: "Algo salió mal, intente nuevamente" };
   }

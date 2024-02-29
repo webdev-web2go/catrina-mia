@@ -5,12 +5,15 @@ import { formatPrice } from "@/lib/utils";
 import RemoveFromCart from "./remove-item";
 import { getCategoryById } from "@/lib/drizzle/category";
 
-export default async function CartItem({ id }: { id: number }) {
-  const { description, cloudinaryImageId, price, categoryId } =
-    (await getProductById(id)) as Product;
-
-  const { name: category } = (await getCategoryById(categoryId)) as Category;
-
+export default async function CartItem({
+  description,
+  cloudinaryImageId,
+  price,
+  category,
+  id,
+}: Pick<Product, "id" | "cloudinaryImageId" | "description" | "price"> & {
+  category: string;
+}) {
   return (
     <article className="relative flex gap-2 text-sm antialiased">
       <RemoveFromCart id={id} />

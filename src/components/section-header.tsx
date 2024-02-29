@@ -6,7 +6,7 @@ import Container from "./container";
 interface Props extends HTMLAttributes<HTMLElement> {
   title: string;
   subtitle: string;
-  description: string;
+  description?: string;
   isMainTitle?: boolean;
   centerTitle?: boolean;
 }
@@ -51,14 +51,16 @@ export default function SectionHeader({
             </h2>
           )}
         </div>
-        <p
-          className={cn(
-            "max-w-prose text-sm text-muted-foreground sm:text-base",
-            centerTitle && "text-center",
-          )}
-        >
-          {description}
-        </p>
+        {description && (
+          <p
+            className={cn(
+              "max-w-prose text-sm text-muted-foreground sm:text-base",
+              centerTitle && "text-center",
+            )}
+          >
+            {description}
+          </p>
+        )}
       </header>
     </Container>
   );

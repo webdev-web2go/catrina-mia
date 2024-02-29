@@ -4,19 +4,30 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/server/db/schema";
 import AddToCart from "./cart/add-to-cart";
 import CldImageWrapper from "./cld-image-wrapper";
+
+interface Props {
+  isCarousel?: boolean;
+}
 
 export default function ProductCard({
   cloudinaryImageId,
   description,
   id,
   price,
-}: Pick<Product, "id" | "description" | "cloudinaryImageId" | "price">) {
+  isCarousel = false,
+}: Pick<Product, "id" | "description" | "cloudinaryImageId" | "price"> &
+  Props) {
   return (
-    <Card className=" w-[300px] space-y-2 overflow-hidden sm:w-[340px]">
+    <Card
+      className={cn(
+        "space-y-2 overflow-hidden ",
+        isCarousel && "w-[300px] sm:w-[340px]",
+      )}
+    >
       <CldImageWrapper description={description} id={cloudinaryImageId} />
       <CardContent className="text-center">
         <CardDescription className="line-clamp-2 overflow-hidden text-ellipsis text-foreground">

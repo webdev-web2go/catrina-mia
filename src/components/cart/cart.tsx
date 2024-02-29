@@ -12,6 +12,7 @@ import CartItem from "./cart-item";
 import Image from "next/image";
 import CheckoutButton from "./checkout-button";
 import RemoveFromCart from "./remove-item";
+import { formatPrice } from "@/lib/utils";
 
 export default async function Cart() {
   const productsInCart = await getProductsInCart();
@@ -60,14 +61,31 @@ export default async function Cart() {
         {productsInCart && productsInCart?.length! > 0 && (
           <>
             <div className="h-5/6 space-y-2 overflow-scroll py-2">
-              {productsInCart?.map((product) => (
+              {productsInCart?.map((productInCart) => (
                 <CartItem
-                  key={product.productId}
-                  id={product.productId as number}
+                  key={productInCart.productId}
+                  category={productInCart.product?.category.name ?? ""}
+                  cloudinaryImageId={
+                    productInCart.product?.cloudinaryImageId ?? ""
+                  }
+                  description={productInCart.product?.description ?? ""}
+                  price={productInCart.product?.price ?? 0}
+                  id={productInCart.productId as number}
                 />
               ))}
             </div>
-            <footer className="mt-auto antialiased">
+            <footer className="mt-auto space-y-2 antialiased">
+              <div className="flex justify-between text-muted-foreground antialiased">
+                <span>Total</span>
+                <strong>
+                  {formatPrice(
+                    productsInCart.reduce(
+                      (acc, { product }) => acc + (product?.price ?? 0),
+                      0,
+                    ),
+                  )}
+                </strong>
+              </div>
               <CheckoutButton productsToCarts={productsInCart} />
             </footer>
           </>

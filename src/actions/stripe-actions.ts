@@ -25,15 +25,11 @@ export async function createSessionAction(
 
   try {
     const user = await currentUser();
-    const products: (Product & { category: string })[] = [];
+    const products = [];
 
     for (const { productId } of productsToCarts) {
-      const product = (await getProductById(productId as number)) as Product;
-      const category = (await getCategoryById(
-        product?.categoryId as number,
-      )) as Category;
-      const newProduct = { ...product, category: category?.name };
-      if (product) products.push(newProduct);
+      const product = await getProductById(productId as number);
+      if (product) products.push(product);
     }
 
     const success = await stripe.checkout.sessions.create({
@@ -44,7 +40,7 @@ export async function createSessionAction(
         price_data: {
           currency: "mxn",
           product_data: {
-            name: `Diadema de ${product.category}`,
+            name: `Diadema de ${product.category.name}`,
             description: product.description,
             images: [
               getCldImageUrl({

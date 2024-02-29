@@ -28,6 +28,7 @@ export default function RootLayout({
           <Nav />
           {children}
           <Toaster richColors />
+          <div>FOOTER</div>
         </body>
       </html>
     </ClerkProvider>

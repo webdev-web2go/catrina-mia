@@ -8,7 +8,7 @@ export default async function ProductsSection() {
   return (
     <section className="space-y-6 antialiased">
       <SectionHeader
-        className="items-center"
+        className="items-center md:px-36"
         title="Calidad y elegancia"
         subtitle="Los mejores productos para tus eventos ó sesiones"
         description="En Catrina mía encontrarás un tocado hermoso para cualquier ocasión, discreto ó llamativo según to preferencia"

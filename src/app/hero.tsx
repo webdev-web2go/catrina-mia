@@ -10,7 +10,7 @@ export default function MainHero() {
         playsInline
         id="main-video"
         preload="metadata"
-        className="aspect-video min-h-screen w-full object-cover object-center"
+        className="aspect-video min-h-screen w-full object-cover [object-position:30px_0px] sm:object-center"
       >
         <source src="/hero/hero-video.mp4" type="video/mp4" />
       </video>

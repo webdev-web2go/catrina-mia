@@ -5,6 +5,7 @@ import { db } from "@/server/db";
 import { carts, users } from "@/server/db/schema";
 import { IncomingHttpHeaders } from "http";
 import { eq } from "drizzle-orm";
+import { ResultSetHeader } from "mysql2";
 
 async function handler(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -54,22 +55,20 @@ async function handler(req: Request) {
     });
 
     if (!userExists) {
-      const { insertId: userId } = await db.insert(users).values({
+      const [userInsert] = await db.insert(users).values({
         email: evt.data.email_addresses[0]?.email_address as string,
         firstName: evt.data.first_name as string,
         lastName: evt.data.last_name as string,
         profileImage: evt.data.image_url as string,
       });
-
-      const { insertId: cartId } = await db
+      const [cartInsert] = await db
         .insert(carts)
-        .values({ userId: Number(userId) });
-
+        .values({ userId: Number(userInsert.insertId) });
       //Asign cart to user
       await db
         .update(users)
-        .set({ cartId: Number(cartId) })
-        .where(eq(users.id, Number(userId)));
+        .set({ cartId: Number(cartInsert.insertId) })
+        .where(eq(users.id, Number(userInsert.insertId)));
     }
   } catch (err) {
     console.error("Error verifying webhook:", err);

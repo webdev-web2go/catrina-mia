@@ -90,7 +90,7 @@ export default function AddProductForm() {
             {categoriesLoading &&
               new Array(8)
                 .fill(0)
-                .map((el, i) => (
+                .map((_, i) => (
                   <span
                     key={i}
                     className="h-[24px] w-[85px] animate-pulse rounded-md bg-gray-400"
@@ -137,33 +137,3 @@ export default function AddProductForm() {
     </div>
   );
 }
-
-// {
-//   id: 'uw-file3',
-//   batchId: 'uw-batch2',
-//   asset_id: 'c3928fdb4667cf35e26349981bb43dbe',
-//   public_id: 'catrina-mia/typp9ksckuxcekgxh20a',
-//   version: 1707925170,
-//   version_id: 'a7fe7a64eaa66c5a5fcc36268d45dd67',
-//   signature: '45b58ba82145332d2ed4fb3d7e59a0722a4f23be',
-//   width: 3072,
-//   height: 3072,
-//   format: 'jpg',
-//   resource_type: 'image',
-//   created_at: '2024-02-14T15:39:30Z',
-//   tags: [],
-//   bytes: 5023876,
-//   type: 'upload',
-//   etag: '4f3cf7a9788d9834bdbaf1d22a73f49c',
-//   placeholder: false,
-//   url:
-//     'http://res.cloudinary.com/dq4h8pb8h/image/upload/v1707925170/catrina-mia/typp9ksckuxcekgxh20a.jpg',
-//   secure_url:
-//     'https://res.cloudinary.com/dq4h8pb8h/image/upload/v1707925170/catrina-mia/typp9ksckuxcekgxh20a.jpg',
-//   folder: 'catrina-mia',
-//   access_mode: 'public',
-//   original_filename: '2023113012485673',
-//   path: 'v1707925170/catrina-mia/typp9ksckuxcekgxh20a.jpg',
-//   thumbnail_url:
-//     'https://res.cloudinary.com/dq4h8pb8h/image/upload/c_limit,h_60,w_90/v1707925170/catrina-mia/typp9ksckuxcekgxh20a.jpg'
-// }

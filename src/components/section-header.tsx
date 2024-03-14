@@ -21,16 +21,14 @@ export default function SectionHeader({
 }: Props) {
   return (
     <Container>
-      <header
-        className={cn("flex flex-col gap-4 antialiased md:px-36", className)}
-      >
+      <header className={cn("flex flex-col gap-4 antialiased", className)}>
         <div
           className={cn(
             "flex w-full flex-col gap-2",
             centerTitle && "items-center",
           )}
         >
-          <Badge className="text-xs sm:text-sm">{subtitle}</Badge>
+          <Badge className="w-fit text-xs sm:text-sm">{subtitle}</Badge>
           {isMainTitle ? (
             <h1
               className={cn(

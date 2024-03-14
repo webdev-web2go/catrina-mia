@@ -6,7 +6,6 @@ export default {
   schema: "./src/server/db/schema.ts",
   driver: "mysql2",
   dbCredentials: {
-    uri: env.DATABASE_URL,
+    uri: env.MYSQL_URL,
   },
-  tablesFilter: ["catrina-mia_*"],
 } satisfies Config;

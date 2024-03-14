@@ -19,7 +19,7 @@ import {
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = mysqlTableCreator((name) => `catrina-mia_${name}`);
+export const createTable = mysqlTableCreator((name) => name);
 
 export const products = createTable("products", {
   id: int("id").primaryKey().autoincrement(),
@@ -28,6 +28,7 @@ export const products = createTable("products", {
   description: varchar("description", { length: 256 }).notNull(),
   cloudinaryImageId: varchar("cloudinary_image_id", { length: 256 }).notNull(),
   stock: int("stock").default(1),
+  // rating: float("rating").default(5),
   active: boolean("active").default(true),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
@@ -54,6 +55,7 @@ export const categories = createTable("categories", {
     "Pasarela",
     "Evento social",
     "Bebés",
+    "8M",
   ]).notNull(),
 });
 
@@ -102,7 +104,7 @@ export const productsToCarts = createTable(
   "products_to_carts",
   {
     productId: int("product_id"),
-    cartId: int("cart_id").references(() => carts.id, { onDelete: "cascade" }),
+    cartId: int("cart_id"),
   },
   ({ cartId, productId }) => ({
     pk: primaryKey({ columns: [cartId, productId] }),

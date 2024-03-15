@@ -13,7 +13,7 @@ export default function ProductItem({
   price,
   active,
   id,
-}: Omit<Product, "stock" | "categoryId" | "createdAt" | "updatedAt">) {
+}: Omit<Product, "stock" | "categories" | "createdAt" | "updatedAt">) {
   const changeProductStatus = async () => {
     const result = await changeProductStatusAction(id, !active);
 

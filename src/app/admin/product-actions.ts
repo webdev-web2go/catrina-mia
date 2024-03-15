@@ -7,11 +7,14 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function createProductAction({
-  categoryId,
+  categories,
   price,
   description,
   cloudinaryImageId,
-}: Partial<Product>) {
+}: Pick<
+  Product,
+  "categories" | "price" | "description" | "cloudinaryImageId"
+>) {
   const { userId, orgRole } = auth();
 
   if (userId && orgRole !== "org:admin") {
@@ -20,7 +23,7 @@ export async function createProductAction({
     };
   }
 
-  if (!categoryId || !price || !description || !cloudinaryImageId) {
+  if (!categories || !price || !description || !cloudinaryImageId) {
     return {
       error: "Todos los campos son requeridos.",
     };
@@ -28,7 +31,7 @@ export async function createProductAction({
   try {
     await db
       .insert(products)
-      .values({ categoryId, price, description, cloudinaryImageId });
+      .values({ categories, price, description, cloudinaryImageId });
 
     revalidatePath("/admin");
     return {

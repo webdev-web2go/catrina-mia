@@ -12,7 +12,6 @@ import {
   ChevronRightIcon,
 } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export default function ProductsCarousel({
@@ -37,7 +36,7 @@ export default function ProductsCarousel({
     swiperRef.current?.swiper.slidePrev();
   };
   return (
-    <Container className="relative cursor-grab">
+    <Container className="relative">
       {!swiperLoaded ? (
         <Skeleton aria-hidden className="h-[524px] w-full rounded-lg" />
       ) : (
@@ -78,7 +77,7 @@ export default function ProductsCarousel({
               width: "100%",
             }}
           >
-            {products.map(({ cloudinaryImageId, description, id, price }) => (
+            {products?.map(({ cloudinaryImageId, description, id, price }) => (
               // @ts-ignore
               <swiper-slide
                 key={id}

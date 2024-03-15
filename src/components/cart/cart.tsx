@@ -64,7 +64,7 @@ export default async function Cart() {
               {productsInCart?.map((productInCart) => (
                 <CartItem
                   key={productInCart.productId}
-                  category={productInCart.product?.category.name ?? ""}
+                  categories={productInCart.product?.categories as string[]}
                   cloudinaryImageId={
                     productInCart.product?.cloudinaryImageId ?? ""
                   }

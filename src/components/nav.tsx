@@ -2,19 +2,17 @@ import { Protect, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import CustomSignInButton from "./sign-in-button";
 import Cart from "./cart/cart";
+import NavWrapper from "./nav-wrapper";
 
 export default async function Nav() {
   return (
-    <header
-      id="header-nav"
-      className="fixed top-0 z-50 flex w-full items-center justify-between px-12 py-8 text-lg text-primary-foreground antialiased"
-    >
+    <NavWrapper>
       <nav className="flex gap-6 font-medium">
         <Link className="tracking-wide" href="/">
           Home
         </Link>
         <Link className="tracking-wide" href="/tocados">
-          Diademas
+          Tocados
         </Link>
         <Link className="tracking-wide" href="#">
           Sobre Catrina Mía
@@ -37,6 +35,6 @@ export default async function Nav() {
           <Cart />
         </SignedIn>
       </div>
-    </header>
+    </NavWrapper>
   );
 }

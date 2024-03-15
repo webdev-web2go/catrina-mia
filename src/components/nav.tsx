@@ -13,7 +13,7 @@ export default async function Nav() {
         <Link className="tracking-wide" href="/">
           Home
         </Link>
-        <Link className="tracking-wide" href="/diademas">
+        <Link className="tracking-wide" href="/tocados">
           Diademas
         </Link>
         <Link className="tracking-wide" href="#">

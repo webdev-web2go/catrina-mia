@@ -47,7 +47,7 @@ export default function ProductsCarousel({
             className="absolute -top-10 right-0 transition hover:scale-110"
           >
             <Link
-              href="/diademas"
+              href="/tocados"
               className="flex items-center gap-1 text-base font-semibold decoration-transparent"
             >
               Ver más <ArrowUpRightFromSquare className="size-5" />

@@ -2,38 +2,29 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { type Category } from "@/server/db/schema";
 import {
   CldImage,
   CldUploadButton,
   CldUploadWidgetInfo,
 } from "next-cloudinary";
-import { useEffect, useRef, useState } from "react";
-import { getCategoriesAction } from "./category-actions";
+import { useRef, useState } from "react";
 import { createProductAction } from "./product-actions";
 import { toast } from "sonner";
 import SubmitButton from "@/components/submit-button";
+import { CATEGORIES } from "@/lib/constants";
 
 export default function AddProductForm() {
   const [uploadInfo, setUploadInfo] = useState<CldUploadWidgetInfo>();
-  const [categories, setCategories] = useState<Category[]>();
-  const [categoriesLoading, setCategoriesLoading] = useState(true);
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
-    getCategoriesAction()
-      .then((categories) => setCategories(categories))
-      .finally(() => setCategoriesLoading(false));
-  }, []);
-
   const createProduct = async (formData: FormData) => {
-    const categoryId = parseInt(formData.get("category") as string);
+    const categories = formData.getAll("category") as string[];
     const price = parseFloat(formData.get("price") as string);
     const description = formData.get("description") as string;
     const cloudinaryImageId = uploadInfo?.public_id as string;
 
     const result = await createProductAction({
-      categoryId,
+      categories,
       price,
       description,
       cloudinaryImageId,
@@ -85,30 +76,20 @@ export default function AddProductForm() {
           />
         </fieldset>
         <fieldset>
-          <label>Categoría</label>
+          <label>Categorías</label>
           <div className="flex flex-wrap gap-x-4 gap-y-2">
-            {categoriesLoading &&
-              new Array(8)
-                .fill(0)
-                .map((_, i) => (
-                  <span
-                    key={i}
-                    className="h-[24px] w-[85px] animate-pulse rounded-md bg-gray-400"
-                  />
-                ))}
-            {!categoriesLoading &&
-              categories?.map((category) => (
-                <label key={category.id} className="flex items-center gap-1">
-                  <Input
-                    defaultValue=""
-                    type="radio"
-                    name="category"
-                    className="h-4 w-4 accent-primary"
-                    value={category.id}
-                  />
-                  {category.name}
-                </label>
-              ))}
+            {CATEGORIES.map((category) => (
+              <label key={category.id} className="flex items-center gap-1">
+                <Input
+                  defaultValue=""
+                  type="checkbox"
+                  name="category"
+                  className="h-4 w-4 accent-primary"
+                  value={category.label}
+                />
+                {category.label}
+              </label>
+            ))}
           </div>
         </fieldset>
         <SubmitButton

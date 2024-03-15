@@ -6,9 +6,6 @@ export async function getProductById(id: number) {
   try {
     return await db.query.products.findFirst({
       where: eq(products.id, id),
-      with: {
-        category: true,
-      },
     });
   } catch (error) {
     console.error(error);
@@ -23,9 +20,6 @@ export async function getProducts(
   try {
     return await db.query.products.findMany({
       where: eq(products.active, isActive),
-      with: {
-        category: true,
-      },
       limit,
       offset,
     });

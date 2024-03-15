@@ -23,11 +23,7 @@ export async function getProductsInCart() {
     return await db.query.productsToCarts.findMany({
       where: eq(productsToCarts.cartId, cartId as number),
       with: {
-        product: {
-          with: {
-            category: true,
-          },
-        },
+        product: true,
       },
     });
   } catch (error) {

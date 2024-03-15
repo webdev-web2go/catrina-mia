@@ -6,9 +6,11 @@ import {
   boolean,
   float,
   int,
+  json,
   mysqlEnum,
   mysqlTableCreator,
   primaryKey,
+  text,
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
@@ -21,14 +23,14 @@ import {
  */
 export const createTable = mysqlTableCreator((name) => name);
 
+/** Schemas */
 export const products = createTable("products", {
   id: int("id").primaryKey().autoincrement(),
-  categoryId: int("category_id").notNull(),
+  categories: json("categories").$type<string[]>().notNull(),
   price: float("price").notNull(),
   description: varchar("description", { length: 256 }).notNull(),
   cloudinaryImageId: varchar("cloudinary_image_id", { length: 256 }).notNull(),
   stock: int("stock").default(1),
-  // rating: float("rating").default(5),
   active: boolean("active").default(true),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
@@ -36,32 +38,19 @@ export const products = createTable("products", {
   updatedAt: timestamp("updatedAt").onUpdateNow(),
 });
 
-export const productsRelations = relations(products, ({ one, many }) => ({
-  category: one(categories, {
-    fields: [products.categoryId],
-    references: [categories.id],
-  }),
-  productsToCarts: many(productsToCarts),
-}));
-
-export const categories = createTable("categories", {
+export const ratings = createTable("ratings", {
   id: int("id").primaryKey().autoincrement(),
-  name: mysqlEnum("name", [
-    "Bodas",
-    "Día de muertos",
-    "Navidad",
-    "Fantasía",
-    "Teatro",
-    "Pasarela",
-    "Evento social",
-    "Bebés",
-    "8M",
-  ]).notNull(),
+  productId: int("product_id").notNull(),
+  userId: int("user_id").notNull(),
+  value: int("value").notNull(),
 });
 
-export const categoriesRelations = relations(categories, ({ many }) => ({
-  products: many(products),
-}));
+export const comments = createTable("comments", {
+  id: int("id").primaryKey().autoincrement(),
+  productId: int("product_id").notNull(),
+  userId: int("user_id").notNull(),
+  message: text("message").notNull(),
+});
 
 export const users = createTable("users", {
   id: int("id").primaryKey().autoincrement(),
@@ -76,13 +65,6 @@ export const users = createTable("users", {
   updatedAt: timestamp("updatedAt").onUpdateNow(),
 });
 
-export const usersRelations = relations(users, ({ one }) => ({
-  cart: one(carts, {
-    fields: [users.cartId],
-    references: [carts.id],
-  }),
-}));
-
 export const carts = createTable("carts", {
   id: int("id").primaryKey().autoincrement(),
   userId: int("user_id").references(() => users.id, { onDelete: "cascade" }),
@@ -91,14 +73,6 @@ export const carts = createTable("carts", {
     .notNull(),
   updatedAt: timestamp("updatedAt").onUpdateNow(),
 });
-
-export const cartsRelations = relations(carts, ({ one, many }) => ({
-  productsToCarts: many(productsToCarts),
-  user: one(users, {
-    fields: [carts.userId],
-    references: [users.id],
-  }),
-}));
 
 export const productsToCarts = createTable(
   "products_to_carts",
@@ -110,6 +84,52 @@ export const productsToCarts = createTable(
     pk: primaryKey({ columns: [cartId, productId] }),
   }),
 );
+
+/** Relations */
+export const productsRelations = relations(products, ({ many }) => ({
+  ratings: many(ratings),
+  comments: many(comments),
+  productsToCarts: many(productsToCarts),
+}));
+
+export const commentsRelations = relations(comments, ({ one }) => ({
+  product: one(products, {
+    fields: [comments.productId],
+    references: [products.id],
+  }),
+  user: one(users, {
+    fields: [comments.userId],
+    references: [users.id],
+  }),
+}));
+
+export const ratingsRelations = relations(ratings, ({ one }) => ({
+  product: one(products, {
+    fields: [ratings.productId],
+    references: [products.id],
+  }),
+  user: one(users, {
+    fields: [ratings.userId],
+    references: [users.id],
+  }),
+}));
+
+export const usersRelations = relations(users, ({ one, many }) => ({
+  ratings: many(ratings),
+  comments: many(comments),
+  cart: one(carts, {
+    fields: [users.cartId],
+    references: [carts.id],
+  }),
+}));
+
+export const cartsRelations = relations(carts, ({ one, many }) => ({
+  productsToCarts: many(productsToCarts),
+  user: one(users, {
+    fields: [carts.userId],
+    references: [users.id],
+  }),
+}));
 
 export const productsToCartsRelations = relations(
   productsToCarts,
@@ -125,7 +145,9 @@ export const productsToCartsRelations = relations(
   }),
 );
 
+/** Types */
 export type Product = InferSelectModel<typeof products>;
-export type Category = InferSelectModel<typeof categories>;
+export type Rating = InferSelectModel<typeof ratings>;
+export type Comment = InferSelectModel<typeof comments>;
 export type User = InferSelectModel<typeof users>;
 export type ProductToCart = InferSelectModel<typeof productsToCarts>;

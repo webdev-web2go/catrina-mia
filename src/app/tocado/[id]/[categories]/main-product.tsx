@@ -2,12 +2,19 @@ import AddToCart from "@/components/cart/add-to-cart";
 import CldImageWrapper from "@/components/cld-image-wrapper";
 import Container from "@/components/container";
 import { getProductById } from "@/lib/drizzle/product";
+import { getProductRatings } from "@/lib/drizzle/rating";
 import { formatPrice } from "@/lib/utils";
-import type { Product } from "@/server/db/schema";
+import type { Product, Rating } from "@/server/db/schema";
+import { StarIcon } from "lucide-react";
 
 export default async function MainProduct({ id }: { id: number }) {
   const { cloudinaryImageId, description, categories, price, stock } =
     (await getProductById(id)) as Product;
+
+  const ratings = (await getProductRatings(id)) as Rating[];
+
+  const productRating =
+    ratings.reduce((acc, rating) => acc + rating.value, 0) / ratings.length;
   return (
     <section className="mt-36">
       <Container className="grid grid-cols-2 justify-items-center gap-6 antialiased">
@@ -18,8 +25,12 @@ export default async function MainProduct({ id }: { id: number }) {
           priority
         />
         <div className="flex flex-col gap-6 p-6">
-          <header>
-            <p className="text-2xl font-bold">{categories.join(", ")}</p>
+          <header className="flex flex-col">
+            <span className="flex items-center gap-1 self-end text-xl">
+              {productRating ? productRating : 0}{" "}
+              <StarIcon className="size-5" />
+            </span>
+            <h1 className="text-2xl font-bold">{categories.join(", ")}</h1>
           </header>
           <p className="max-w-prose text-pretty">{description}</p>
           <footer className="mt-auto flex flex-col gap-4">

@@ -1,14 +1,20 @@
 "use client";
 
 import { CldImage } from "next-cloudinary";
-import { type HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 
 interface Props extends HTMLAttributes<HTMLImageElement> {
   id: string;
   description: string;
+  priority?: boolean;
 }
 
-export default function CldImageWrapper({ id, description, ...props }: Props) {
+export default function CldImageWrapper({
+  id,
+  description,
+  priority = false,
+  ...props
+}: Props) {
   return (
     <CldImage
       width={1000}
@@ -19,6 +25,7 @@ export default function CldImageWrapper({ id, description, ...props }: Props) {
       placeholder="blur"
       blurDataURL="/small_logo.webp"
       alt={description}
+      priority={priority}
       {...props}
     />
   );

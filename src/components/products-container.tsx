@@ -33,15 +33,18 @@ export default function ProductsContainer() {
                 className="h-[492px] w-[308px] rounded-lg"
               />
             ))
-        : products?.map(({ cloudinaryImageId, description, id, price }) => (
-            <ProductCard
-              key={id}
-              id={id}
-              cloudinaryImageId={cloudinaryImageId}
-              description={description}
-              price={price}
-            />
-          ))}
+        : products?.map(
+            ({ cloudinaryImageId, description, id, price, categories }) => (
+              <ProductCard
+                key={id}
+                id={id}
+                cloudinaryImageId={cloudinaryImageId}
+                description={description}
+                price={price}
+                categories={categories}
+              />
+            ),
+          )}
       <Pagination changePage={setPage} page={page} />
     </Container>
   );

@@ -23,8 +23,8 @@ export default function CustomOrder() {
         </div>
         <div className="space-y-4 sm:space-y-0 sm:p-6">
           <SectionHeader
-            subtitle="Diademas personalizadas"
-            title="¿Necesitas una diadema hecha a la medida?"
+            subtitle="Tocados personalizados"
+            title="¿Necesitas un tocado hecho a la medida?"
             className="items-start"
           />
           <div className="space-y-4 px-2 sm:p-6">

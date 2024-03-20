@@ -77,25 +77,28 @@ export default function ProductsCarousel({
               width: "100%",
             }}
           >
-            {products?.map(({ cloudinaryImageId, description, id, price }) => (
-              // @ts-ignore
-              <swiper-slide
-                key={id}
-                style={{
-                  width: "fit-content",
-                  marginLeft: "15px",
-                }}
-              >
-                <ProductCard
-                  id={id}
-                  cloudinaryImageId={cloudinaryImageId}
-                  description={description}
-                  price={price}
-                  isCarousel
-                />
-                {/* @ts-ignore */}
-              </swiper-slide>
-            ))}
+            {products?.map(
+              ({ cloudinaryImageId, description, id, price, categories }) => (
+                // @ts-ignore
+                <swiper-slide
+                  key={id}
+                  style={{
+                    width: "fit-content",
+                    marginLeft: "15px",
+                  }}
+                >
+                  <ProductCard
+                    id={id}
+                    cloudinaryImageId={cloudinaryImageId}
+                    description={description}
+                    price={price}
+                    categories={categories}
+                    isCarousel
+                  />
+                  {/* @ts-ignore */}
+                </swiper-slide>
+              ),
+            )}
             {/* @ts-ignore */}
           </swiper-container>
         </>

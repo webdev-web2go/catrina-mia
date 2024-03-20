@@ -1,6 +1,6 @@
 import { db } from "@/server/db";
 import { products } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 
 export async function getProductById(id: number) {
   try {

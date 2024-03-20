@@ -19,11 +19,15 @@ export default function ProductCard({
   description,
   id,
   price,
+  categories,
   isCarousel = false,
-}: Pick<Product, "id" | "description" | "cloudinaryImageId" | "price"> &
+}: Pick<
+  Product,
+  "id" | "description" | "cloudinaryImageId" | "price" | "categories"
+> &
   Props) {
   return (
-    <Link href={`/tocado/${id}`}>
+    <Link href={`/tocado/${id}/${categories.join(",")}`}>
       <Card
         className={cn(
           "space-y-2 overflow-hidden ",

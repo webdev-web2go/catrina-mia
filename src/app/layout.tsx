@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="es">
         <body className={`min-h-screen font-sans ${raleway.variable}`}>
           <Nav />
           {children}

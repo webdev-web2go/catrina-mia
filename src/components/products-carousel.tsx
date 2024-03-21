@@ -13,11 +13,14 @@ import {
 } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function ProductsCarousel({
   products,
+  showSeeMoreLink = true,
 }: {
   products: Product[];
+  showSeeMoreLink?: boolean;
 }) {
   const swiperRef = useRef(null);
   const [swiperLoaded, setSwiperLoaded] = useState(false);
@@ -41,29 +44,43 @@ export default function ProductsCarousel({
         <Skeleton aria-hidden className="h-[524px] w-full rounded-lg" />
       ) : (
         <>
-          <Button
-            asChild
-            variant="link"
-            className="absolute -top-10 right-0 transition hover:scale-110"
-          >
-            <Link
-              href="/tocados"
-              className="flex items-center gap-1 text-base font-semibold decoration-transparent"
+          {showSeeMoreLink && (
+            <Button
+              asChild
+              variant="link"
+              className="absolute -top-10 right-0 transition hover:scale-110"
             >
-              Ver más <ArrowUpRightFromSquare className="size-5" />
-            </Link>
-          </Button>
+              <Link
+                href="/tocados"
+                className="flex items-center gap-1 text-base font-semibold decoration-transparent"
+              >
+                Ver más <ArrowUpRightFromSquare className="size-5" />
+              </Link>
+            </Button>
+          )}
           <Button
             onClick={handlePreviousTab}
             title="Anterior"
-            className="absolute left-[30px] top-1/2 z-50 hidden size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-0 font-bold md:flex xl:left-[15px]"
+            className={cn(
+              "absolute left-[30px] top-1/2 z-50 size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-0 font-bold xl:left-[15px]",
+              {
+                hidden: products.length < 4,
+                "hidden md:flex": products.length > 4,
+              },
+            )}
           >
             <ChevronLeftIcon className="size-8" />
           </Button>
           <Button
             onClick={handleNextTab}
             title="Siguiente"
-            className="absolute right-6 top-1/2 z-50 hidden size-12 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full p-0 font-bold md:flex xl:right-0"
+            className={cn(
+              "absolute right-6 top-1/2 z-50 size-12 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full p-0 font-bold xl:right-0",
+              {
+                hidden: products.length < 4,
+                "hidden md:flex": products.length > 4,
+              },
+            )}
           >
             <ChevronRightIcon className="size-8" />
           </Button>
@@ -71,7 +88,7 @@ export default function ProductsCarousel({
           <swiper-container
             ref={swiperRef}
             slides-per-view="auto"
-            loop="true"
+            loop={products.length > 4}
             style={{
               height: "100%",
               width: "100%",

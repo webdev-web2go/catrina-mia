@@ -19,7 +19,7 @@ export default async function MainProduct({ id }: { id: number }) {
     0;
   return (
     <section className="mt-36">
-      <Container className="grid grid-cols-2 justify-items-center gap-6 antialiased">
+      <Container className="grid justify-items-center antialiased lg:grid-cols-2 lg:gap-6">
         <picture className="relative">
           <CldImageWrapper
             id={cloudinaryImageId}

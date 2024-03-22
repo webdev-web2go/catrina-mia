@@ -43,6 +43,10 @@ export const ratings = createTable("ratings", {
   productId: int("product_id").notNull(),
   userId: int("user_id").notNull(),
   value: int("value").notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updatedAt").onUpdateNow(),
 });
 
 export const comments = createTable("comments", {
@@ -50,6 +54,10 @@ export const comments = createTable("comments", {
   productId: int("product_id").notNull(),
   userId: int("user_id").notNull(),
   message: text("message").notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updatedAt").onUpdateNow(),
 });
 
 export const users = createTable("users", {

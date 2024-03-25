@@ -1,5 +1,6 @@
 import AddToCart from "@/components/cart/add-to-cart";
 import CldImageWrapper from "@/components/cld-image-wrapper";
+import Comment from "@/components/comment";
 import Container from "@/components/container";
 import Rate from "@/components/rate";
 import { getProductById } from "@/lib/drizzle/product";
@@ -20,7 +21,7 @@ export default async function MainProduct({ id }: { id: number }) {
   return (
     <section className="mt-36">
       <Container className="grid justify-items-center antialiased lg:grid-cols-2 lg:gap-6">
-        <picture className="relative">
+        <picture className="relative text-white">
           <CldImageWrapper
             id={cloudinaryImageId}
             description={description}
@@ -28,6 +29,7 @@ export default async function MainProduct({ id }: { id: number }) {
             priority
           />
           <Rate productId={id} />
+          <Comment productId={id} />
         </picture>
         <div className="flex flex-col gap-6 p-6">
           <header className="flex flex-col">

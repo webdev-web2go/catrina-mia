@@ -1,5 +1,6 @@
 "use server";
 
+import { getUserByEmail } from "@/lib/drizzle/user";
 import { db } from "@/server/db";
 import { type User, ratings, users } from "@/server/db/schema";
 import { currentUser } from "@clerk/nextjs";
@@ -38,9 +39,9 @@ export async function rateProductAction(productId: number, value: number) {
   }
 
   try {
-    const { id: userId } = (await db.query.users.findFirst({
-      where: eq(users.email, user.emailAddresses[0]?.emailAddress as string),
-    })) as User;
+    const { id: userId } = (await getUserByEmail(
+      user.emailAddresses[0]?.emailAddress as string,
+    )) as User;
 
     const userAlreadyRated = await db.query.ratings.findFirst({
       where: and(eq(ratings.productId, productId), eq(ratings.userId, userId)),

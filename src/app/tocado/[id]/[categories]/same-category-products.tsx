@@ -5,11 +5,15 @@ import type { Product } from "@/server/db/schema";
 
 export default async function SameCategoryProducts({
   categories,
+  mainProductId,
 }: {
   categories: string[];
+  mainProductId: number;
 }) {
-  const sameCategoryProducts = (await getProducts(true))?.filter((prod) =>
-    categories.some((cat) => prod.categories.includes(cat)),
+  const sameCategoryProducts = (await getProducts(true))?.filter(
+    (prod) =>
+      categories.some((cat) => prod.categories.includes(cat)) &&
+      prod.id !== mainProductId,
   ) as Product[];
   return (
     <section className="space-y-6">
@@ -18,7 +22,10 @@ export default async function SameCategoryProducts({
         subtitle="También te podría interesar"
         className="md:px-36"
       />
-      <ProductsCarousel products={sameCategoryProducts} />
+      <ProductsCarousel
+        products={sameCategoryProducts}
+        showSeeMoreLink={false}
+      />
     </section>
   );
 }

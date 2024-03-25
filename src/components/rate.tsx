@@ -33,7 +33,14 @@ export default function Rate({
     startTransition(async () => {
       const result = await rateProductAction(productId, value);
       if (result?.info) {
-        toast.info(result.info);
+        toast.info(result.info, {
+          style: {
+            background: "#eff8ff",
+            color: "blue",
+            borderColor: "#d3e0fd",
+          },
+        });
+        setRating(currentRating);
       } else if (result?.error) setRating(currentRating);
     });
   };

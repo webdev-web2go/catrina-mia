@@ -7,7 +7,6 @@ import {
   float,
   int,
   json,
-  mysqlEnum,
   mysqlTableCreator,
   primaryKey,
   text,

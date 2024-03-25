@@ -27,24 +27,24 @@ export default function ProductCard({
 > &
   Props) {
   return (
-    <Link href={`/tocado/${id}/${categories.join(",")}`}>
-      <Card
-        className={cn(
-          "space-y-2 overflow-hidden ",
-          isCarousel && "w-[300px] sm:w-[340px]",
-        )}
-      >
+    <Card
+      className={cn(
+        "space-y-2 overflow-hidden",
+        isCarousel && "w-[300px] sm:w-[340px]",
+      )}
+    >
+      <Link href={`/tocado/${id}/${categories.join(",")}`}>
         <CldImageWrapper description={description} id={cloudinaryImageId} />
-        <CardContent className="text-center">
-          <CardDescription className="line-clamp-2 overflow-hidden text-ellipsis text-foreground">
-            {description}
-          </CardDescription>
-        </CardContent>
-        <CardFooter className="mt-auto flex flex-col gap-2">
-          <strong className="text-2xl">{formatPrice(price as number)}</strong>
-          <AddToCart id={id} />
-        </CardFooter>
-      </Card>
-    </Link>
+      </Link>
+      <CardContent className="text-center">
+        <CardDescription className="line-clamp-2 overflow-hidden text-ellipsis text-foreground">
+          {description}
+        </CardDescription>
+      </CardContent>
+      <CardFooter className="mt-auto flex flex-col gap-2">
+        <strong className="text-2xl">{formatPrice(price as number)}</strong>
+        <AddToCart id={id} />
+      </CardFooter>
+    </Card>
   );
 }
